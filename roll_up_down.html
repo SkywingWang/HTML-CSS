@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>循环停顿上下滚动</title>
+	<style type="text/css">
+		#block2{height:23px;width: 500px;border:#ccc 1px solid;font-size: 12px;text-align: center;}
+		#block2 ul{list-style: outside none none;height: 17px;padding: 3px 0;overflow: hidden;margin:0;}
+		#block2 ul li{float: left;display: inline;margin:2px 0;height: 14px;width: 24.9%;}
+		#block2 ul li a{text-decoration:none;}
+	</style>
+</head>
+<body>
+	<div id="block2">
+		<ul id="rolltxt">
+			<li>C语言</li>
+			<li>C++</li>
+			<li>C#</li>
+			<li>Java</li>
+			<li>Python</li>
+			<li>Ruby</li>
+		</ul>
+	<script type="text/javascript">
+	function extractNodes(pNode){
+		if(pNode.nodeType==3)
+			return null;
+		var node,nodes = new Array();
+		for(var i=0;node = pNode.childNodes[i];i++){
+			if(node.nodeType == 1)nodes.push(node);
+		}
+		return nodes;
+	}
+	var obj=document.getElementById("rolltxt");
+	for(i=0;i<4;i++){
+		obj.appendChild(extractNodes(obj)[i].cloneNode(true));
+	}
+	settime=0;
+	var t=setInterval(rolltxt,50);
+	function rolltxt(){
+		if(obj.scrollTop % (obj.clientHeight -5) == 0){
+			settime += 1;
+			if(settime==50){
+				obj.scrollTop += 1;
+				settime=0;
+			}
+		}else{
+			obj.scrollTop += 1;
+			if(obj.scrollTop==(obj.scrollHeight-obj.clientHeight)){
+				obj.scrollTop=0;
+			}
+		}
+	}
+	obj.onmouseover=function(){clearInter(t)}
+	obj.onmouseover=function(){t=setInterval(rolltxt,50)}
+	</script>
+	</div>
+</body>
